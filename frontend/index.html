@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI MEP Clash Rerouting | HoloMedX</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animated">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <div id="secure-context-banner" class="secure-context-banner" hidden>
+        WebXR needs HTTPS after upload. Your file upload and standard 3D viewer still work on HTTP, but AR/VR features are disabled until this site is hosted over HTTPS.
+    </div>
+
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar glass-panel">
+        <div class="sidebar-header">
+            <div class="logo-circle">
+                <i class="fa-solid fa-layer-group"></i>
+            </div>
+            <h2>ClashX</h2>
+        </div>
+        
+        <ul class="nav-links">
+            <li class="nav-item active" data-target="dashboard">
+                <i class="fa-solid fa-chart-pie"></i>
+                <span>Project Dashboard</span>
+            </li>
+            <li class="nav-item" data-target="bim-viewer">
+                <i class="fa-solid fa-cube"></i>
+                <span>3D BIM Viewer</span>
+            </li>
+            <li class="nav-item" data-target="clash-list">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <span>Clash Management</span>
+            </li>
+            <li class="nav-item" data-target="ai-analysis">
+                <i class="fa-solid fa-microchip"></i>
+                <span>AI Rerouting Analysis</span>
+            </li>
+            <li class="nav-item" data-target="ar-overlay">
+                <i class="fa-solid fa-vr-cardboard"></i>
+                <span>AR Field Overlay</span>
+            </li>
+            <div class="nav-divider"></div>
+            <li class="nav-item" data-target="upload">
+                <i class="fa-solid fa-file-arrow-up"></i>
+                <span>Upload & Processing</span>
+            </li>
+          </ul>
+    </nav>
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <!-- Dashboard Header -->
+        <header class="top-nav glass-panel">
+            <div class="search-bar">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" placeholder="Search clashes, models, or reports...">
+            </div>
+            <div class="nav-actions">
+                <button class="btn-primary" id="btn-request-reroute">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> Auto-Reroute
+                </button>
+            </div>
+        </header>
+
+        <!-- Dashboard View -->
+        <div class="view-container active" id="view-dashboard">
+            <div class="hero-card glass-panel">
+                <div class="hero-content">
+                    <h1>AI MEP Clash Rerouting</h1>
+                    <p>Automate your MEP coordination. Resolve dimensional clashes using our proprietary ML routing algorithm and visualize in extreme 3D detail.</p>
+                    <div class="stats-row">
+                        <div class="stat-box">
+                            <h3>142</h3>
+                            <p>Active Clashes</p>
+                        </div>
+                        <div class="stat-box">
+                            <h3>89%</h3>
+                            <p>Resolution Rate</p>
+                        </div>
+                        <div class="stat-box highlight">
+                            <h3>1.2s</h3>
+                            <p>Avg AI Processing</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="hologram-effect">
+                        <i class="fa-solid fa-network-wired"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-layout">
+                <!-- Recent Clashes -->
+                <div class="card glass-panel col-span-2">
+                    <div class="card-header">
+                        <h3>Critical Clashes</h3>
+                        <a href="#" class="view-all">View All</a>
+                    </div>
+                    <div class="clash-list">
+                        <div class="clash-item">
+                            <div class="clash-icon hvac"><i class="fa-solid fa-fan"></i></div>
+                            <div class="clash-details">
+                                <h4>HVAC Duct vs Plumbing Pipe</h4>
+                                <p>Level 4 · Sector B</p>
+                            </div>
+                            <div class="clash-status critical">Critical</div>
+                            <button class="btn-secondary btn-sm">Analyze</button>
+                        </div>
+                        <div class="clash-item">
+                            <div class="clash-icon electrical"><i class="fa-solid fa-bolt"></i></div>
+                            <div class="clash-details">
+                                <h4>Cable Tray vs Structural Beam</h4>
+                                <p>Level 2 · Generator Room</p>
+                            </div>
+                            <div class="clash-status warning">Warning</div>
+                            <button class="btn-secondary btn-sm">Analyze</button>
+                        </div>
+                        <div class="clash-item">
+                            <div class="clash-icon plumbing"><i class="fa-solid fa-droplet"></i></div>
+                            <div class="clash-details">
+                                <h4>Fire Sprinkler vs Lighting Fixture</h4>
+                                <p>Level 5 · Corridor 5A</p>
+                            </div>
+                            <div class="clash-status resolved">Resolved</div>
+                            <button class="btn-secondary btn-sm">View Log</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Processing Queue -->
+                <div class="card glass-panel">
+                    <div class="card-header">
+                        <h3>AI Processing Queue</h3>
+                    </div>
+                    <div class="queue-list">
+                        <div class="queue-item processing">
+                            <div class="spinner"></div>
+                            <span>Batch Reroute #442</span>
+                            <span class="percentage">78%</span>
+                        </div>
+                        <div class="queue-item queued">
+                            <i class="fa-solid fa-clock"></i>
+                            <span>Level 3 Optimization</span>
+                            <span class="percentage">Wait</span>
+                        </div>
+                        <div class="queue-item queued">
+                            <i class="fa-solid fa-clock"></i>
+                            <span>Basement Plumbing Fix</span>
+                            <span class="percentage">Wait</span>
+                        </div>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" style="width: 78%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Upload View -->
+        <div class="view-container flex-view" id="view-upload" style="height: 80%; align-items: center; justify-content: center; text-align: center;">
+            <div class="glass-panel" style="padding: 4rem; border-radius: 16px; width: 600px; max-width: 90%; margin: 0 auto; margin-top: 5rem;">
+                <i class="fa-solid fa-cloud-arrow-up" style="font-size: 4rem; color: var(--primary); margin-bottom: 2rem;"></i>
+                <h2 style="font-size: 2rem; margin-bottom: 1rem; color: var(--text-main);">Upload OpenBIM (.ifc)</h2>
+                <p style="color: var(--text-muted); font-size: 1.1rem; line-height: 1.6; margin-bottom: 2rem;">Initiate the local Python IfcOpenShell extraction and routing process. No internet required.</p>
+                
+                <input type="file" id="demo-upload-input" style="display:none;" accept=".ifc,.rvt" />
+                <button class="btn-primary glow-effect" onclick="document.getElementById('demo-upload-input').click()" style="padding: 1rem 2rem; font-size: 1.2rem; width: 100%;">Browse Computer</button>
+                <div id="upload-status-text" style="color: var(--primary); margin-top: 1.5rem; font-family: monospace; font-size: 1rem; height: 20px;"></div>
+            </div>
+        </div>
+
+        <!-- 3D BIM Viewer Simulation View -->
+        <div class="view-container" id="view-bim-viewer">
+            <div class="card glass-panel h-full" style="display: flex; flex-direction: column; padding: 2rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <h2>3D WebGL Coordinates Matrix</h2>
+                    <button class="btn-primary" id="btn-trigger-ai" style="display:none;">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Execute Reroute
+                    </button>
+                    <button class="btn-secondary" id="btn-download-ifc" style="display:none; background: #10b981; color: white;">
+                        <i class="fa-solid fa-download"></i> Download Remodeled .ifc
+                    </button>
+                </div>
+
+                <div id="viewer-mode-note" class="viewer-mode-note" hidden>
+                    HTTP mode detected: running standard 3D workflow only. Switch hosting to HTTPS to enable secure WebXR features after deployment.
+                </div>
+
+                <div id="uploaded-file-card" class="card glass-panel" style="margin-bottom: 1rem; display: none;">
+                    <div class="card-header" style="margin-bottom: 1rem;">
+                        <h3>Uploaded File</h3>
+                    </div>
+                    <div id="uploaded-file-name" style="font-size: 1.1rem; font-weight: 700; color: var(--text-main);"></div>
+                    <div id="uploaded-file-meta" style="margin-top: 0.5rem; color: var(--text-muted); font-size: 0.95rem;"></div>
+                </div>
+
+                <div id="conversion-required-card" class="card glass-panel" style="margin-bottom: 1rem; display: none;">
+                    <div class="card-header" style="margin-bottom: 1rem;">
+                        <h3>RVT Conversion Required</h3>
+                    </div>
+                    <div style="color: var(--text-main); font-weight: 700;">This RVT cannot be shown as a full 3D model in the browser yet.</div>
+                    <div style="margin-top: 0.75rem; color: var(--text-muted); line-height: 1.6;">
+                        Convert the model to IFC first, or export FBX/GLB from Revit, then upload that converted model for real web viewing and real clash extraction.
+                    </div>
+                </div>
+                
+                <!-- Mock WebGL Canvas -->
+                <div id="mock-canvas" style="flex: 1; background: #0f172a; border-radius: 12px; position: relative; border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                    <!-- Grid background -->
+                    <div style="position: absolute; inset: 0; background-size: 40px 40px; background-image: linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px);"></div>
+                    <div id="ifc-viewer-container" style="position:absolute; inset:0; display:none;"></div>
+                    
+                    <h3 id="canvas-status" style="position: absolute; top: 20px; left: 20px; color: var(--text-muted); font-family: monospace;">Awaiting Model Extents...</h3>
+                    
+                    <!-- SVG representing 3D Pipes -->
+                    <svg width="400" height="300" viewBox="0 0 400 300" style="z-index: 10;">
+                        <!-- Static Background HVAC Duct -->
+                        <rect x="50" y="100" width="300" height="40" fill="#475569" rx="5" />
+                        <!-- Target Plumbing Pipe that clashes then gets solved -->
+                        <path id="mock-pipe" d="M 200,250 L 200,50" stroke="#ef4444" stroke-width="12" fill="none" stroke-linecap="round" style="opacity: 0; transition: all 1s ease;" />
+                    </svg>
+                </div>
+
+                <div id="analysis-summary" class="grid-layout" style="grid-template-columns: repeat(4, 1fr); margin-top: 1.5rem; display: none;">
+                    <div class="card glass-panel">
+                        <div style="color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase;">Elements Scanned</div>
+                        <div id="stat-elements" style="margin-top: 0.5rem; font-size: 2rem; font-weight: 800;">0</div>
+                    </div>
+                    <div class="card glass-panel">
+                        <div style="color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase;">Critical</div>
+                        <div id="stat-critical" style="margin-top: 0.5rem; font-size: 2rem; font-weight: 800; color: var(--critical);">0</div>
+                    </div>
+                    <div class="card glass-panel">
+                        <div style="color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase;">Major</div>
+                        <div id="stat-major" style="margin-top: 0.5rem; font-size: 2rem; font-weight: 800; color: var(--warning);">0</div>
+                    </div>
+                    <div class="card glass-panel">
+                        <div style="color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase;">Reroute Candidates</div>
+                        <div id="stat-reroute" style="margin-top: 0.5rem; font-size: 2rem; font-weight: 800; color: var(--resolved);">0</div>
+                    </div>
+                </div>
+
+                <div id="clash-results" class="grid-layout" style="grid-template-columns: repeat(2, 1fr); margin-top: 1.5rem; display: none;"></div>
+                <div id="reroute-summary-card" class="card glass-panel" style="margin-top: 1.5rem; display: none;">
+                    <div class="card-header" style="margin-bottom: 1rem;">
+                        <h3>AABB Reroute Result</h3>
+                    </div>
+                    <div id="reroute-summary-text" style="color: var(--text-main); font-weight: 700;"></div>
+                    <div id="reroute-stats" style="margin-top: 0.9rem; color: var(--text-muted);"></div>
+                    <div id="reroute-coordinates" style="margin-top: 1rem; color: var(--text-muted); font-family: monospace; white-space: pre-wrap;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Placeholder View for other pages -->
+        <div class="view-container flex-view" id="view-placeholder" style="height: 80%; align-items: center; justify-content: center; text-align: center;">
+            <div class="glass-panel" style="padding: 4rem; border-radius: 16px; width: 600px; max-width: 90%; margin: 0 auto; margin-top: 5rem;">
+                <i class="fa-solid fa-person-digging" style="font-size: 4rem; color: var(--primary); margin-bottom: 2rem;"></i>
+                <h2 class="placeholder-title" style="font-size: 2rem; margin-bottom: 1rem; color: var(--text-main);">Module Name</h2>
+                <p style="color: var(--text-muted); font-size: 1.1rem; line-height: 1.6;">This view is currently under construction. Future integrations will load the respective WebGL / AI data instances directly into this layout.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- AI Reroute Request Modal -->
+    <div class="modal-overlay" id="modal-reroute">
+        <div class="modal glass-panel">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-wand-magic-sparkles ai-icon"></i> New AI Reroute Request</h3>
+                <button class="btn-close" id="btn-close-modal"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Select Target Model / Level</label>
+                    <select class="glass-input">
+                        <option>Level 4 - Main Office Sector</option>
+                        <option>Level 2 - Generator Room</option>
+                        <option>Basement - Parking</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Optimization Priority</label>
+                    <div class="priority-options">
+                        <div class="priority-btn active">Cost/Material</div>
+                        <div class="priority-btn">Time/Labor</div>
+                        <div class="priority-btn">Acoustics</div>
+                    </div>
+                </div>
+                <p class="ai-disclaimer">AI will simulate up to 50,000 path variations before suggesting the optimal reroute.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="btn-cancel-modal">Cancel</button>
+                <button class="btn-primary glow-effect">Execute AI Batch Reroute</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/app.js"></script>
+    <script type="module" src="js/ifc-viewer.js"></script>
+</body>
+</html>
