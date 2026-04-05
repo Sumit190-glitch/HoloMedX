@@ -1,0 +1,51 @@
+
+ISO-10303-21;
+HEADER;
+FILE_DESCRIPTION(('ViewDefinition [CoordinationView]'),'2;1');
+FILE_NAME('pipe_clash_example.ifc','2026-04-05T10:00:00',('ChatGPT'),('ChatGPT'),'IFC Generator','ChatGPT','');
+FILE_SCHEMA(('IFC4'));
+ENDSEC;
+
+DATA;
+
+/* Basic project structure */
+#1 = IFCPERSON($,$,'User',$,$,$,$,$);
+#2 = IFCORGANIZATION($,'AI Generator',$,$,$);
+#3 = IFCPERSONANDORGANIZATION(#1,#2,$);
+#4 = IFCAPPLICATION(#2,'1.0','ClashPipeGenerator','APP1');
+#5 = IFCOWNERHISTORY(#3,#4,$,.ADDED.,$,$,$,0);
+#10 = IFCPROJECT('3hG$ExampleProject',$,'Pipe Clash Project',$,$,$,$,(#20),#30);
+#20 = IFCGEOMETRICREPRESENTATIONCONTEXT($,'Model',3,1.E-05,#21,$);
+#21 = IFCAXIS2PLACEMENT3D(#22,$,$);
+#22 = IFCCARTESIANPOINT((0.,0.,0.));
+#30 = IFCUNITASSIGNMENT((#31,#32,#33));
+#31 = IFCSIUNIT(*,.LENGTHUNIT.,$,.METRE.);
+#32 = IFCSIUNIT(*,.AREAUNIT.,$,.SQUARE_METRE.);
+#33 = IFCSIUNIT(*,.VOLUMEUNIT.,$,.CUBIC_METRE.);
+
+/* Pipe 1 */
+#100 = IFCCARTESIANPOINT((0.,0.,0.));
+#101 = IFCAXIS2PLACEMENT3D(#100,$,$);
+#102 = IFCLOCALPLACEMENT($,#101);
+#103 = IFCCARTESIANPOINT((0.,0.,0.));
+#104 = IFCDIRECTION((1.,0.,0.));
+#105 = IFCVECTOR(#104,10.);
+#106 = IFCLINE(#103,#105);
+#107 = IFCSHAPEREPRESENTATION(#20,'Body','Curve3D',(#106));
+#108 = IFCPRODUCTDEFINITIONSHAPE($,$,(#107));
+#109 = IFCPIPESEGMENT('Pipe1',$,'Horizontal Pipe',$,#102,#108,$);
+
+/* Pipe 2 (crossing pipe causing clash) */
+#200 = IFCCARTESIANPOINT((5.,-5.,0.));
+#201 = IFCAXIS2PLACEMENT3D(#200,$,$);
+#202 = IFCLOCALPLACEMENT($,#201);
+#203 = IFCCARTESIANPOINT((5.,-5.,0.));
+#204 = IFCDIRECTION((0.,1.,0.));
+#205 = IFCVECTOR(#204,10.);
+#206 = IFCLINE(#203,#205);
+#207 = IFCSHAPEREPRESENTATION(#20,'Body','Curve3D',(#206));
+#208 = IFCPRODUCTDEFINITIONSHAPE($,$,(#207));
+#209 = IFCPIPESEGMENT('Pipe2',$,'Vertical Pipe',$,#202,#208,$);
+
+ENDSEC;
+END-ISO-10303-21;
